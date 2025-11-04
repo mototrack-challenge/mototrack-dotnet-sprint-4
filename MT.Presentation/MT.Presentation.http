@@ -1,0 +1,6 @@
+@MT.Presentation_HostAddress = http://localhost:5252
+
+GET {{MT.Presentation_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
