@@ -6,6 +6,8 @@ using MT.Domain.Interfaces;
 using MT.Infra.Data.Repositories;
 using MT.Application.Interfaces;
 using MT.Application.Services;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using MT.Infra.Data.HealthCheck;
 
 namespace MT.Infra.IoC;
 
@@ -17,6 +19,12 @@ public class Bootstrap
             //options.UseOracle(configuration.GetConnectionString("Oracle"));
             options.UseOracle(configuration.GetConnectionString("Oracle"));
         });
+
+        services.AddHealthChecks()
+            // Liveness: verifica api “estou no ar”
+            .AddCheck("self", () => HealthCheckResult.Healthy(), tags: new[] { "live" })
+            //Readiness: verifica se o mongo "esta online"
+            .AddCheck<OracleHealthCheck>("oracle_ef_query", tags: new[] { "ready" });
 
         services.AddTransient<IMotoRepository, MotoRepository>();
         services.AddTransient<IMotoService, MotoService>();

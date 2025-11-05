@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.Oracle" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MT.Application\MT.Application.csproj" />
     <ProjectReference Include="..\MT.Domain\MT.Domain.csproj" />
     <ProjectReference Include="..\MT.Infra.Data\MT.Infra.Data.csproj" />
