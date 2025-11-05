@@ -7,12 +7,18 @@ namespace MT.Infra.Data.Repositories;
 
 public class MotoRepository : IMotoRepository
 {
+    #region :: INJEÇÃO DE DEPENDÊNCIA
+
     private readonly ApplicationContext _context;
 
     public MotoRepository(ApplicationContext context)
     {
         _context = context;
     }
+
+    #endregion
+
+    #region :: READ
 
     public async Task<PageResultModel<IEnumerable<MotoEntity>>> ObterTodasMotosAsync(int deslocamento = 0, int registrosRetornados = 10)
     {
@@ -46,4 +52,6 @@ public class MotoRepository : IMotoRepository
 
         return result;
     }
+
+    #endregion
 }

@@ -7,12 +7,18 @@ namespace MT.Application.Services;
 
 public class MotoService : IMotoService
 {
+    #region :: INJEÇÃO DE DEPENDÊNCIA
+
     private readonly IMotoRepository _motoRepository;
 
     public MotoService(IMotoRepository motoRepository)
     {
         _motoRepository = motoRepository;
     }
+
+    #endregion
+
+    #region :: READ
 
     public async Task<OperationResult<PageResultModel<IEnumerable<MotoEntity>>>> ObterTodasMotosAsync(int deslocamento = 0, int registrosRetornados = 10)
     {
@@ -47,5 +53,7 @@ public class MotoService : IMotoService
             return OperationResult<MotoEntity?>.Failure("Ocorreu um erro ao buscar a moto");
         }
     }
+
+    #endregion
 
 }

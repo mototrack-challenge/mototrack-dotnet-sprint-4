@@ -9,12 +9,18 @@ namespace MT.Application.Services;
 
 public class PecaService : IPecaService
 {
+    #region :: INJEÇÃO DE DEPENDÊNCIA
+
     private readonly IPecaRepository _pecaRepository;
 
     public PecaService(IPecaRepository pecaRepository)
     {
         _pecaRepository = pecaRepository;
     }
+
+    #endregion
+
+    #region :: READ
 
     public async Task<OperationResult<PageResultModel<IEnumerable<PecaEntity>>>> ObterTodasPecasAsync(int deslocamento = 0, int registrosRetornados = 10)
     {
@@ -50,6 +56,10 @@ public class PecaService : IPecaService
         }
     }
 
+    #endregion
+
+    #region :: CREATE
+
     public async Task<OperationResult<PecaEntity?>> AdicionarPecaAsync(PecaDTO pecaDTO)
     {
         try
@@ -63,6 +73,10 @@ public class PecaService : IPecaService
             return OperationResult<PecaEntity?>.Failure("Ocorreu um erro ao salvar a peça");
         }
     }
+
+    #endregion
+
+    #region :: UPDATE
 
     public async Task<OperationResult<PecaEntity?>> EditarPecaAsync(long id, PecaDTO novaPecaDTO)
     {
@@ -84,6 +98,10 @@ public class PecaService : IPecaService
         }
     }
 
+    #endregion
+
+    #region :: DELETE
+
     public async Task<OperationResult<PecaEntity?>> DeletarPecaAsync(long id)
     {
         try
@@ -102,4 +120,6 @@ public class PecaService : IPecaService
             return OperationResult<PecaEntity?>.Failure("Ocorreu um erro ao deletar a peça");
         }
     }
+
+    #endregion
 }

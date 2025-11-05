@@ -7,6 +7,8 @@ namespace MT.Infra.Data.Repositories;
 
 public class PecaRepository : IPecaRepository
 {
+    #region :: INJEÇÃO DE DEPENDÊNCIA
+
     private readonly ApplicationContext _context;
 
     public PecaRepository(ApplicationContext context)
@@ -14,6 +16,9 @@ public class PecaRepository : IPecaRepository
         _context = context;
     }
 
+    #endregion
+
+    #region :: READ
     public async Task<PageResultModel<IEnumerable<PecaEntity>>> ObterTodasPecasAsync(int deslocamento = 0, int registrosRetornados = 10)
     {
         var totalRegistros = await _context.Peca.CountAsync();
@@ -43,6 +48,9 @@ public class PecaRepository : IPecaRepository
         return result;
     }
 
+    #endregion
+
+    #region :: CREATE
     public async Task<PecaEntity?> AdicionarPecaAsync(PecaEntity peca)
     {
         _context.Peca.Add(peca);
@@ -50,6 +58,10 @@ public class PecaRepository : IPecaRepository
 
         return peca;
     }
+
+    #endregion
+
+    #region :: UPDATE
 
     public async Task<PecaEntity?> EditarPecaAsync(long id, PecaEntity novaPeca)
     {
@@ -67,6 +79,10 @@ public class PecaRepository : IPecaRepository
         return pecaExistente;
     }
 
+    #endregion
+
+    #region :: DELETE
+
     public async Task<PecaEntity?> DeletarPecaAsync(long id)
     {
         var peca = await _context.Peca.FindAsync(id);
@@ -78,4 +94,6 @@ public class PecaRepository : IPecaRepository
         await _context.SaveChangesAsync();
         return peca;
     }
+
+    #endregion
 }

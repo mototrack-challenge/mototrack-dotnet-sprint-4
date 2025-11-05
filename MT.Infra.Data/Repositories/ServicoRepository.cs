@@ -7,6 +7,8 @@ namespace MT.Infra.Data.Repositories;
 
 public class ServicoRepository : IServicoRepository
 {
+    #region :: INJEÇÃO DE DEPENDÊNCIA
+
     private readonly ApplicationContext _context;
 
     public ServicoRepository(ApplicationContext context)
@@ -14,6 +16,9 @@ public class ServicoRepository : IServicoRepository
         _context = context;
     }
 
+    #endregion
+
+    #region :: READ
     public async Task<PageResultModel<IEnumerable<ServicoEntity>>> ObterTodosServicosAsync(int deslocamento = 0, int registrosRetornados = 10)
     {
         var totalRegistros = await _context.Servico.CountAsync();
@@ -54,12 +59,20 @@ public class ServicoRepository : IServicoRepository
             .ToListAsync();
     }
 
+    #endregion
+
+    #region :: CREATE
+
     public async Task<ServicoEntity?> AdicionarServicoAsync(ServicoEntity servico)
     {
         _context.Servico.Add(servico);
         await _context.SaveChangesAsync();
         return servico;
     }
+
+    #endregion
+
+    #region :: UPDATE
 
     public async Task<ServicoEntity?> EditarServicoAsync(long id, ServicoEntity novoServico)
     {
@@ -78,6 +91,10 @@ public class ServicoRepository : IServicoRepository
         return existente;
     }
 
+    #endregion
+
+    #region :: DELETE
+
     public async Task<ServicoEntity?> DeletarServicoAsync(long id)
     {
         var existente = await _context.Servico.FindAsync(id);
@@ -90,4 +107,6 @@ public class ServicoRepository : IServicoRepository
 
         return existente;
     }
+
+    #endregion
 }

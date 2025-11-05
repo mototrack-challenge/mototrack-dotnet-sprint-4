@@ -9,6 +9,8 @@ namespace MT.Application.Services;
 
 public class ServicoService : IServicoService
 {
+    #region :: INJEÇÃO DE DEPENDÊNCIA
+
     private readonly IServicoRepository _servicoRepository;
     private readonly IMotoRepository _motoRepository;
 
@@ -17,6 +19,10 @@ public class ServicoService : IServicoService
         _servicoRepository = servicoRepository;
         _motoRepository = motoRepository;
     }
+
+    #endregion
+
+    #region :: READ
 
     public async Task<OperationResult<PageResultModel<IEnumerable<ServicoEntity>>>> ObterTodosServicosAsync(int deslocamento = 0, int registrosRetornados = 10)
     {
@@ -74,6 +80,10 @@ public class ServicoService : IServicoService
         }
     }
 
+    #endregion
+
+    #region :: CREATE
+
     public async Task<OperationResult<ServicoEntity?>> AdicionarServicoAsync(ServicoDTO servicoDTO)
     {
         try
@@ -87,6 +97,10 @@ public class ServicoService : IServicoService
             return OperationResult<ServicoEntity?>.Failure("Ocorreu um erro ao salvar o serviço");
         }
     }
+
+    #endregion
+
+    #region :: UPDATE
 
     public async Task<OperationResult<ServicoEntity?>> EditarServicoAsync(long id, ServicoDTO novoServicoDTO)
     {
@@ -108,6 +122,10 @@ public class ServicoService : IServicoService
         }
     }
 
+    #endregion
+
+    #region :: DELETE
+
     public async Task<OperationResult<ServicoEntity?>> DeletarServicoAsync(long id)
     {
         try
@@ -126,4 +144,6 @@ public class ServicoService : IServicoService
             return OperationResult<ServicoEntity?>.Failure("Ocorreu um erro ao deletar o serviço");
         }
     }
+
+    #endregion
 }

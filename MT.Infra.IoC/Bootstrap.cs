@@ -29,5 +29,8 @@ public class Bootstrap
 
         services.AddTransient<IPecaRepository, PecaRepository>();
         services.AddTransient<IPecaService, PecaService>();
+
+        services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+        services.AddTransient<IUsuarioService, UsuarioService>();
     }
 }

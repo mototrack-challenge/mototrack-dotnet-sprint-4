@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using MT.Application.Dtos;
 using MT.Application.Interfaces;
@@ -11,16 +12,23 @@ using System.Security.Cryptography;
 
 namespace mototrack_backend_rest_dotnet.Presentation.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class ServicoController : ControllerBase
 {
+    #region :: INJEÇÃO DE DEPENDÊNCIA
+
     private readonly IServicoService _servicoService;
 
     public ServicoController(IServicoService servicoService)
     {
         _servicoService = servicoService;
     }
+
+    #endregion
+
+    #region :: READ
 
     [HttpGet]
     [SwaggerOperation(
@@ -144,6 +152,10 @@ public class ServicoController : ControllerBase
         }));
     }
 
+    #endregion
+
+    #region :: CREATE
+
     [HttpPost]
     [SwaggerOperation(
         Summary = "Cadastra um novo serviço",
@@ -160,6 +172,10 @@ public class ServicoController : ControllerBase
 
         return StatusCode(result.StatusCode, result);
     }
+
+    #endregion
+
+    #region :: UPDATE
 
     [HttpPut("{id}")]
     [SwaggerOperation(
@@ -180,6 +196,10 @@ public class ServicoController : ControllerBase
         return StatusCode(result.StatusCode, result);
     }
 
+    #endregion
+
+    #region :: DELETE
+
     [HttpDelete("{id}")]
     [SwaggerOperation(
         Summary = "Remove um serviço",
@@ -195,4 +215,6 @@ public class ServicoController : ControllerBase
 
         return StatusCode(result.StatusCode, result);
     }
+
+    #endregion
 }

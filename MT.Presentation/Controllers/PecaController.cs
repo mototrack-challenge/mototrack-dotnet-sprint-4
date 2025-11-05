@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
@@ -11,16 +12,23 @@ using Swashbuckle.AspNetCore.Filters;
 
 namespace MT.Presentation.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class PecaController : ControllerBase
 {
+    #region :: INJEÇÃO DE DEPENDÊNCIA
+
     private readonly IPecaService _pecaService;
 
     public PecaController(IPecaService pecaService)
     {
         _pecaService = pecaService;
     }
+
+    #endregion
+
+    #region :: READ
 
     [HttpGet]
     [SwaggerOperation(
@@ -86,6 +94,10 @@ public class PecaController : ControllerBase
         return Ok(result.Value);
     }
 
+    #endregion
+
+    #region :: CREATE
+
     [HttpPost]
     [SwaggerOperation(
         Summary = "Cadastra uma nova peça",
@@ -103,6 +115,9 @@ public class PecaController : ControllerBase
         return StatusCode(result.StatusCode, result);
     }
 
+    #endregion
+
+    #region :: UPDATE
     [HttpPut("{id}")]
     [SwaggerOperation(
         Summary = "Atualiza uma peça",
@@ -122,6 +137,10 @@ public class PecaController : ControllerBase
         return StatusCode(result.StatusCode, result);
     }
 
+    #endregion
+
+    #region :: DELETE
+
     [HttpDelete("{id}")]
     [SwaggerOperation(
         Summary = "Remove uma peça",
@@ -137,4 +156,6 @@ public class PecaController : ControllerBase
 
         return StatusCode(result.StatusCode, result);
     }
+
+    #endregion
 }

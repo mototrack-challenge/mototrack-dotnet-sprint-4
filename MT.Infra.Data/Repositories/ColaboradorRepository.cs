@@ -7,12 +7,18 @@ namespace MT.Infra.Data.Repositories;
 
 public class ColaboradorRepository : IColaboradorRepository
 {
+    #region :: INJEÇÃO DE DEPENDÊNCIA
+
     private readonly ApplicationContext _context;
 
     public ColaboradorRepository(ApplicationContext context)
     {
         _context = context;
     }
+
+    #endregion
+
+    #region :: READ
 
     public async Task<PageResultModel<IEnumerable<ColaboradorEntity>>> ObterTodosColaboradoresAsync(int deslocamento = 0, int registrosRetornados = 10)
     {
@@ -45,6 +51,10 @@ public class ColaboradorRepository : IColaboradorRepository
         return result;
     }
 
+    #endregion
+
+    #region :: CREATE
+
     public async Task<ColaboradorEntity?> AdicionarColaboradorAsync(ColaboradorEntity colaborador)
     {
         _context.Colaborador.Add(colaborador);
@@ -52,6 +62,10 @@ public class ColaboradorRepository : IColaboradorRepository
 
         return colaborador;
     }
+
+    #endregion
+
+    #region :: UPDATE
 
     public async Task<ColaboradorEntity?> EditarColaboradorAsync(long id, ColaboradorEntity novoColaborador)
     {
@@ -68,6 +82,9 @@ public class ColaboradorRepository : IColaboradorRepository
         return colaboradorExistente;
     }
 
+    #endregion
+
+    #region :: DELETE
     public async Task<ColaboradorEntity?> DeletarColaboradorAsync(long id)
     {
         var colaborador = await _context.Colaborador.FindAsync(id);
@@ -80,6 +97,9 @@ public class ColaboradorRepository : IColaboradorRepository
         return colaborador;
     }
 
+    #endregion
+
+    #region :: VALIDAÇÕES
     public async Task<bool> ExisteOutroComMesmoEmailAsync(long id, string email)
     {
         var existe = await _context.Colaborador
@@ -97,4 +117,6 @@ public class ColaboradorRepository : IColaboradorRepository
 
         return existe != null;
     }
+
+    #endregion
 }

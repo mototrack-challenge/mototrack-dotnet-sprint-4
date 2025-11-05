@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using MT.Application.Dtos;
 using MT.Application.Interfaces;
@@ -9,16 +10,23 @@ using Swashbuckle.AspNetCore.Filters;
 
 namespace MT.Presentation.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class ColaboradorController : ControllerBase
 {
+    #region :: INJEÇÃO DE DEPENDÊNCIA
+
     private readonly IColaboradorService _colaboradorService;
 
     public ColaboradorController(IColaboradorService colaboradorService) 
     {
         _colaboradorService = colaboradorService;
     }
+
+    #endregion
+
+    #region :: READ
 
     [HttpGet]
     [SwaggerOperation(
@@ -84,6 +92,10 @@ public class ColaboradorController : ControllerBase
         return Ok(result.Value);
     }
 
+    #endregion
+
+    #region :: CREATE
+
     [HttpPost]
     [SwaggerOperation(
         Summary = "Cadastra um novo colaborador",
@@ -100,6 +112,10 @@ public class ColaboradorController : ControllerBase
 
         return StatusCode(result.StatusCode, result);
     }
+
+    #endregion
+
+    #region :: UPDATE
 
     [HttpPut("{id}")]
     [SwaggerOperation(
@@ -120,6 +136,10 @@ public class ColaboradorController : ControllerBase
         return StatusCode(result.StatusCode, result);
     }
 
+    #endregion
+
+    #region :: DELETE
+
     [HttpDelete("{id}")]
     [SwaggerOperation(
         Summary = "Remove um colaborador",
@@ -135,4 +155,6 @@ public class ColaboradorController : ControllerBase
 
         return StatusCode(result.StatusCode, result);
     }
+
+    #endregion
 }

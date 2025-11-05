@@ -9,12 +9,18 @@ namespace MT.Application.Services;
 
 public class ColaboradorService : IColaboradorService
 {
+    #region :: INJEÇÃO DE DEPENDÊNCIA
+
     private readonly IColaboradorRepository _colaboradorRepository;
 
     public ColaboradorService(IColaboradorRepository colaboradorRepository)
     {
         _colaboradorRepository = colaboradorRepository;
     }
+
+    #endregion
+
+    #region :: READ
 
     public async Task<OperationResult<PageResultModel<IEnumerable<ColaboradorEntity>>>> ObterTodosColaboradoresAsync(int deslocamento = 0, int registrosRetornados = 10)
     {
@@ -50,6 +56,10 @@ public class ColaboradorService : IColaboradorService
         }
     }
 
+    #endregion
+
+    #region :: CREATE
+
     public async Task<OperationResult<ColaboradorEntity?>> AdicionarColaboradorAsync(ColaboradorDTO colaboradorDTO)
     {
         try
@@ -72,6 +82,10 @@ public class ColaboradorService : IColaboradorService
             return OperationResult<ColaboradorEntity?>.Failure("Ocorreu um erro ao salvar o colaborador: " + ex.Message);
         }
     }
+
+    #endregion
+
+    #region :: UPDATE
 
     public async Task<OperationResult<ColaboradorEntity?>> EditarColaboradorAsync(long id, ColaboradorDTO novoColaboradorDTO)
     {
@@ -101,6 +115,10 @@ public class ColaboradorService : IColaboradorService
         }
     }
 
+    #endregion
+
+    #region :: DELETE
+
     public async Task<OperationResult<ColaboradorEntity?>> DeletarColaboradorAsync(long id)
     {
         try
@@ -119,4 +137,6 @@ public class ColaboradorService : IColaboradorService
             return OperationResult<ColaboradorEntity?>.Failure("Ocorreu um erro ao deletar o colaborador");
         }
     }
+
+    #endregion
 }

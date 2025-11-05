@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using MT.Application.Dtos;
 using MT.Application.Interfaces;
@@ -9,10 +10,13 @@ using Swashbuckle.AspNetCore.Filters;
 
 namespace MT.Presentation.Controllers;
 
+[Authorize]
 [Route("api/[controller]")]
 [ApiController]
 public class MotoController : ControllerBase
 {
+    #region :: INJEÇÃO DE DEPENDÊNCIA
+
     private readonly IMotoService _motoService;
 
     public MotoController(IMotoService motoService)
@@ -20,6 +24,9 @@ public class MotoController : ControllerBase
         _motoService = motoService;
     }
 
+    #endregion
+
+    #region :: READ
     [HttpGet]
     [SwaggerOperation(
             Summary = "Lista de motos",
@@ -118,4 +125,6 @@ public class MotoController : ControllerBase
 
         return Ok(response);
     }
+
+    #endregion
 }
