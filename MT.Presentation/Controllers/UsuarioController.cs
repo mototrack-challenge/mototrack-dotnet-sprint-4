@@ -36,6 +36,14 @@ public class UsuarioController : ControllerBase
 
     [HttpPost("auth")]
     [AllowAnonymous]
+    [SwaggerOperation(
+    Summary = "Autenticação de usuário",
+    Description = "Realiza o login de um usuário e retorna um token JWT válido por 8 horas."
+)]
+    [SwaggerRequestExample(typeof(AutenticacaoDTO), typeof(AutenticacaoRequestSample))]
+    [SwaggerResponse(statusCode: 200, description: "Usuário autenticado com sucesso", type: typeof(AutenticacaoResponseDTO))]
+    [SwaggerResponseExample(statusCode: 200, typeof(AutenticacaoResponseSample))]
+    [SwaggerResponse(statusCode: 401, description: "Credenciais inválidas (usuário ou senha incorretos)")]
     public async Task<IActionResult> Login(AutenticacaoDTO entity)
     {
         var result = await _usuarioService.AutenticarUserAsync(entity);
@@ -78,7 +86,7 @@ public class UsuarioController : ControllerBase
         )]
     [SwaggerResponse(statusCode: 200, description: "Lista retornada com sucesso", type: typeof(IEnumerable<UsuarioEntity>))]
     [SwaggerResponse(statusCode: 204, description: "Lista não tem dados")]
-    [SwaggerResponseExample(statusCode: 200, typeof(ColaboradorResponseListSample))]
+    [SwaggerResponseExample(statusCode: 200, typeof(UsuarioResponseListSample))]
     [EnableRateLimiting("MotoTrack")]
     public async Task<IActionResult> Get(int deslocamento = 0, int registrosRetornados = 10)
     {
@@ -124,7 +132,7 @@ public class UsuarioController : ControllerBase
         )]
     [SwaggerResponse(statusCode: 200, description: "Usuário encontrado", type: typeof(UsuarioEntity))]
     [SwaggerResponse(statusCode: 404, description: "Usuário não encontrado")]
-    [SwaggerResponseExample(statusCode: 200, typeof(ColaboradorResponseSample))]
+    [SwaggerResponseExample(statusCode: 200, typeof(UsuarioResponseSample))]
     public async Task<IActionResult> GetId(long id)
     {
         var result = await _usuarioService.ObterUsuarioPorIdAsync(id);
@@ -144,9 +152,9 @@ public class UsuarioController : ControllerBase
         Summary = "Cadastra um novo usuário",
         Description = "Cadastra um novo usuário no sistema e retorna os dados cadastrados."
     )]
-    [SwaggerRequestExample(typeof(UsuarioDTO), typeof(ColaboradorRequestSample))]
+    [SwaggerRequestExample(typeof(UsuarioDTO), typeof(UsuarioRequestSample))]
     [SwaggerResponse(statusCode: 200, description: "Usuário salvo com sucesso", type: typeof(UsuarioEntity))]
-    [SwaggerResponseExample(statusCode: 200, typeof(ColaboradorResponseSample))]
+    [SwaggerResponseExample(statusCode: 200, typeof(UsuarioResponseSample))]
     public async Task<IActionResult> Post(UsuarioDTO dto)
     {
         var result = await _usuarioService.AdicionarUsuarioAsync(dto);
@@ -169,8 +177,8 @@ public class UsuarioController : ControllerBase
     [SwaggerResponse(statusCode: 200, description: "Usuário atualizado com sucesso", type: typeof(UsuarioEntity))]
     [SwaggerResponse(statusCode: 400, description: "Erro na requisição (validação ou dados inválidos)")]
     [SwaggerResponse(statusCode: 404, description: "Usuário não encontrado")]
-    [SwaggerRequestExample(typeof(ColaboradorDTO), typeof(ColaboradorRequestSample))]
-    [SwaggerResponseExample(statusCode: 200, typeof(ColaboradorResponseSample))]
+    [SwaggerRequestExample(typeof(ColaboradorDTO), typeof(UsuarioRequestSample))]
+    [SwaggerResponseExample(statusCode: 200, typeof(UsuarioResponseSample))]
     public async Task<IActionResult> Put(long id, UsuarioDTO dto)
     {
         var result = await _usuarioService.EditarUsuarioAsync(id, dto);
