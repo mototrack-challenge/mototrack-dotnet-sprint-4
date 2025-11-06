@@ -128,3 +128,7 @@ app.UseRateLimiter();
 app.MapControllers();
 
 app.Run();
+
+
+// Somente para os testes 
+public partial class Program { }

@@ -13,9 +13,18 @@
     <PackageReference Include="coverlet.collector" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.21" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.20" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="xunit" Version="2.5.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MT.Application\MT.Application.csproj" />
+    <ProjectReference Include="..\MT.Domain\MT.Domain.csproj" />
+    <ProjectReference Include="..\MT.Infra.Data\MT.Infra.Data.csproj" />
+    <ProjectReference Include="..\MT.Presentation\MT.Presentation.csproj" />
   </ItemGroup>
 
   <ItemGroup>
