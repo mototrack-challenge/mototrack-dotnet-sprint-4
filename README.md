@@ -349,6 +349,69 @@ Esses endpoints podem ser usados em:
 - `DELETE - /api/Usuario/{id}`  
   Remove o usuário com este id.
 
+
+### 🧪 Testes Automatizados
+
+O **MotoTrack REST API .NET** possui uma robusta suíte de **testes unitários e de integração**, garantindo a **qualidade, confiabilidade e estabilidade** das principais funcionalidades da aplicação.
+
+#### 🧩 Estrutura de Testes
+
+Foram desenvolvidas **15 classes de testes unitários** abrangendo diferentes camadas do sistema, com foco na verificação das regras de negócio e comportamento esperado dos componentes.
+Os testes cobrem:
+
+- ✅ **Controllers** – validação dos endpoints, códigos de status HTTP e retornos esperados;
+
+- 🧠 **Services** – validação das regras de negócio e interações entre entidades;
+
+- 🗄️ **Repositories** – simulação de operações de CRUD com o Entity Framework Core;
+
+- 🔐 **Autenticação JWT** – verificação do processo de login, geração e validação de tokens;
+
+#### ⚙️ Ferramentas Utilizadas
+
+Os testes foram desenvolvidos utilizando ferramentas amplamente utilizadas no ecossistema .NET:
+
+- **xUnit** – framework principal para execução dos testes unitários;
+
+- **Moq** – criação de mocks e stubs para simular dependências e comportamentos;
+
+- **FluentAssertions** – para validações mais expressivas e legíveis;
+
+- **Microsoft.AspNetCore.Mvc.Testing** – suporte a testes de integração com servidor em memória.
+
+#### 🚀 Como Executar os Testes
+
+Para rodar todos os testes unitários, execute o seguinte comando na raiz do projeto de testes:
+
+```bash
+dotnet test
+```
+
+O .NET executará automaticamente todas as classes de teste, exibindo o resultado no terminal, incluindo o número de testes bem-sucedidos, falhas e tempo de execução total.
+
+**2️⃣ Via Visual Studio:**
+Abra a **Solution** no Visual Studio, navegue até o **Projeto de Testes** (`MotoTrack.Tests`), clique com o **botão direito do mouse** sobre ele e selecione **“Executar Testes” (Run Tests)**.
+
+**Exemplo de saída:**
+
+```bash
+Test run for MotoTrack.Tests.dll (.NETCoreApp,Version=v8.0)
+Total tests: 15. Passed: 15. Failed: 0. Skipped: 0.
+Test Run Successful.
+```
+
+#### 🎯 Objetivo dos Testes
+
+Os testes unitários foram criados com o objetivo de:
+
+- Garantir a correção das regras de negócio;
+
+- Detectar regressões durante novas implementações;
+
+- Assegurar a confiabilidade e integridade da API;
+
+- Manter alta cobertura de código e facilitar futuras manutenções.
+
 --- 
 
 ## 🚀 Como Rodar o Projeto REST API (.NET)
