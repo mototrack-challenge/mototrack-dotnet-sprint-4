@@ -157,7 +157,7 @@ As seguintes rotas estão **liberadas** para acesso público:
   "senha": "123456"
 }
 ```
-    - Exemplo de resposta:
+Exemplo de resposta:
   
 ```jsonc
 {
