@@ -178,6 +178,31 @@ Sem o token ou com token inválido, a API retorna **HTTP 401 – Unauthorized**.
 
 Essa autenticação garante segurança e controle de acesso às operações sensíveis, como cadastro, edição e exclusão de dados de colaboradores, serviços e peças.
 
+### 💓 Health Checks
+
+O **MotoTrack REST API .NET** implementa endpoints de **Health Check** para monitorar o estado e a disponibilidade do sistema.
+Essas rotas são essenciais para **verificações automáticas de saúde** da aplicação, especialmente em ambientes de **deploy na nuvem**, **Docker** ou **CI/CD pipelines**.
+
+#### 🩵 Endpoints Disponíveis
+
+- `GET - /api/Health/live`
+    - Verifica se a API está em execução.
+    - Retorna 200 OK se o processo do servidor estiver ativo.
+
+- `GET - /api/Health/ready`
+    - Verifica se a API está pronta para receber requisições.
+    - Testa a conexão com o banco de dados Oracle e outras dependências críticas antes de considerar o serviço disponível.
+
+#### 🧠 Utilização
+
+Esses endpoints podem ser usados em:
+
+- Serviços de orquestração (como Kubernetes) para verificar a saúde da aplicação;
+
+- Monitoramento em produção, detectando falhas antes de impactar os usuários;
+
+- Ambientes locais, para confirmar se o backend está inicializado corretamente antes de rodar o frontend ou o app mobile.
+
 ### 🌐 Exemplos de Endpoints
 
 #### 🏍️ Moto (somente leitura)
