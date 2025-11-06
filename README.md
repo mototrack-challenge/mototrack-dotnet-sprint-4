@@ -3,7 +3,7 @@
 ## 👥 Integrantes
 
 - **Felipe Ulson Sora** – RM555462 – [@felipesora](https://github.com/felipesora)
-- **Augusto Lope Lyra** – RM558209 – [@lopeslyra10](https://github.com/lopeslyra10)
+- **Augusto Lopes Lyra** – RM558209 – [@lopeslyra10](https://github.com/lopeslyra10)
 - **Vinicius Ribeiro Nery Costa** – RM559165 – [@ViniciusRibeiroNery](https://github.com/ViniciusRibeiroNery)
 
 ## 📌 Sumário
@@ -107,6 +107,7 @@ O projeto utiliza as seguintes tecnologias e bibliotecas principais:
 - **Entity Framework Core** – integração com o **Oracle Database**    
 - **Swagger** – documentação interativa da API  
 - **Dependency Injection (DI)** – para organização de serviços e repositórios
+- **JWT (JSON Web Token)** – autenticação e autorização seguras de usuários
 
 ### 🚀 Rodando o Projeto
 - A API roda em: [http://localhost:5073/](http://localhost:5073/)  
@@ -114,10 +115,68 @@ O projeto utiliza as seguintes tecnologias e bibliotecas principais:
 
 ### 📝 Funcionalidades
 A API permite realizar operações de **criação, leitura, atualização e exclusão** para as seguintes entidades:
+- 👤 **Usuários** (autenticação via JWT e controle de acesso)
 - 🏍️ **Motos** (somente leitura – obtidas do backend Java)
 - 👨‍🔧 **Colaboradores**  
 - 🛠️ **Serviços** (vinculados a motos e colaboradores)  
-- 📦 **Peças** (com controle de estoque)  
+- 📦 **Peças** (com controle de estoque)
+
+### 🔐 Autenticação e Autorização com JWT
+
+O projeto utiliza **autenticação baseada em JWT (JSON Web Token)** para proteger seus endpoints e garantir que apenas usuários autenticados possam acessar as rotas privadas da API.
+
+Após o login bem-sucedido, o sistema retorna um **token JWT**, que deve ser enviado no cabeçalho `Authorization` das requisições subsequentes no formato:
+
+```bash
+{
+  Authorization: Bearer <seu_token_jwt>
+}
+```
+
+#### 🔑 Endpoints Públicos (sem necessidade de autenticação)
+
+As seguintes rotas estão **liberadas** para acesso público:
+
+- `POST - /api/Usuario`
+    - Cria um novo usuário no sistema.
+
+```jsonc
+{
+  "nome": "Felipe Sora",
+  "email": "felipe@mototrack.com",
+  "senha": "123456"
+}
+```
+
+- `POST - /api/Usuario/auth`
+    - Realiza o login do usuário e retorna o token JWT.
+
+```jsonc
+{
+  "email": "felipe@mototrack.com",
+  "senha": "123456"
+}
+```
+    - Exemplo de resposta:
+  
+```jsonc
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+- `GET - /api/Health/live`
+    - Endpoint de liveness probe, usado para verificar se a API está viva.
+
+- `GET - /api/Health/ready`
+    - Endpoint de readiness probe, usado para verificar se a API está pronta para receber requisições.
+
+#### 🔒 Endpoints Protegidos
+
+Todas as demais rotas da API exigem um **token JWT válido**.
+Sem o token ou com token inválido, a API retorna **HTTP 401 – Unauthorized**.
+
+Essa autenticação garante segurança e controle de acesso às operações sensíveis, como cadastro, edição e exclusão de dados de colaboradores, serviços e peças.
 
 ### 🌐 Exemplos de Endpoints
 
@@ -231,6 +290,39 @@ A API permite realizar operações de **criação, leitura, atualização e excl
 
 - `DELETE - /api/Peca/{id}`  
   Remove a peça com este id.
+
+#### 👥 Usuário
+
+- `POST - /api/Usuario`  
+  Cadastra um novo usuário no sistema.
+
+```jsonc
+{
+  "nome": "Felipe Sora",
+  "email": "felipe@mototrack.com", 
+  "senha": "123456"
+}
+```
+
+- `GET - /api/Usuario`  
+  Lista todos os usuários no sistema.
+
+- `GET BY ID - /api/Usuario/{id}`  
+  Lista os detalhes do usuário com este id.
+
+- `PUT - /api/Usuario/{id}`  
+  Atualiza os dados de um usuário.
+
+```jsonc
+{
+  "nome": "Felipe Ulson Sora", // alterando nome
+  "email": "felipe.sora@mototrack.com", // alterando email
+  "senha": "123456"
+}
+```
+
+- `DELETE - /api/Usuario/{id}`  
+  Remove o usuário com este id.
 
 --- 
 
