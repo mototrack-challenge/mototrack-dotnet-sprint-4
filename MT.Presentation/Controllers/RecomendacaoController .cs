@@ -5,6 +5,7 @@ using Microsoft.ML;
 using Microsoft.ML.Data;
 using MT.Application.Interfaces;
 using MT.Domain.Entities;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace MT.Presentation.Controllers;
 
@@ -40,6 +41,12 @@ public class RecomendacaoController : ControllerBase
 
     // Treinar modelo usando Matrix Factorization
     [HttpGet("Treinar")]
+    [SwaggerOperation(
+        Summary = "Treina o modelo de recomendação de serviços",
+        Description = "Treina o modelo ML.NET usando histórico de serviços e colaboradores, salvando o modelo em disco."
+    )]
+    [SwaggerResponse(200, "Modelo treinado com sucesso.")]
+    [SwaggerResponse(400, "Erro ao obter dados de serviços para treinamento.")]
     public async Task<IActionResult> Treinar()
     {
         var result = await _servicoService.ObterTodosServicosAsync();
@@ -76,6 +83,12 @@ public class RecomendacaoController : ControllerBase
 
     // Fazer recomendações
     [HttpPost("{colaboradorId}")]
+    [SwaggerOperation(
+        Summary = "Gera recomendações de serviços para um colaborador",
+        Description = "Recebe o colaboradorId e uma lista de IDs de serviços, retornando uma pontuação de recomendação para cada serviço."
+    )]
+    [SwaggerResponse(200, "Recomendações geradas com sucesso.")]
+    [SwaggerResponse(400, "Modelo de recomendação não foi treinado ou parâmetros inválidos.")]
     public async Task<IActionResult> RecomendarServico(uint colaboradorId, [FromBody] IEnumerable<uint> servicosIds)
     {
         if (!System.IO.File.Exists(caminhoModelo))
