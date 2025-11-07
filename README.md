@@ -412,6 +412,84 @@ Os testes unitários foram criados com o objetivo de:
 
 - Manter alta cobertura de código e facilitar futuras manutenções.
 
+### 🤖 Recomendação de Serviços com ML.NET
+
+O **MotoTrack REST API .NET** conta com um módulo de **recomendação de serviços utilizando ML.NET**, permitindo sugerir serviços para colaboradores com base no histórico de execução e notas de cada serviço.
+
+#### 🧩 Como Funciona
+- Utiliza o **Matrix Factorization Trainer** do ML.NET para gerar recomendações.
+- Os dados de entrada são:
+    - **ColaboradorId** – identificador do colaborador;
+    - **ServicoId**– identificador do serviço;
+    - **Nota** – avaliação do serviço (5 para concluído, 1 para pendente).
+- O modelo aprende padrões de execução de serviços pelos colaboradores e calcula uma pontuação de recomendação para cada possível serviço.
+
+#### ⚙️ Endpoints
+
+1. Treinar Modelo
+- `GET - /api/Recomendacao/Treinar`
+- Treina o modelo de recomendação com os dados atuais de serviços e colaboradores e salva o modelo em disco.
+
+Exemplo de resposta:
+
+```bash
+{
+  "data": "Modelo treinado com sucesso!"
+}
+```
+
+2. Gerar Recomendações
+
+- `POST - /api/Recomendacao/{colaboradorId}`
+- Recebe um colaboradorId e uma lista de IDs de serviços e retorna a pontuação de recomendação e classificação para cada serviço.
+
+Exemplo de request:
+
+```bash
+{
+  [1, 2, 3, 4]
+}
+```
+
+Exemplo de resposta:
+
+```bash
+{
+  "data": [
+    {
+      "Servico": "Troca de óleo",
+      "Status": "Concluido",
+      "Score": 4.5,
+      "Recomendado": "Altamente Recomendado"
+    },
+    {
+      "Servico": "Verificação de freios",
+      "Status": "Pendente",
+      "Score": 2.8,
+      "Recomendado": "Não Recomendado"
+    }
+  ],
+  "status": 200
+}
+```
+
+#### 🎯 Benefícios
+
+- Sugere serviços que o colaborador tem maior probabilidade de executar com sucesso;
+
+- Ajuda a priorizar tarefas e otimizar a gestão da frota;
+
+- Fácil integração com os endpoints já existentes de serviços e colaboradores.
+
+#### 💾 Armazenamento do Modelo
+
+O modelo é salvo no caminho:
+```bash
+<Terraforma da aplicação>/Treinamento/ModeloRecomendacaoServico.zip
+```
+
+Ele deve ser treinado pelo endpoint `/Treinar` antes de gerar recomendações.
+
 --- 
 
 ## 🚀 Como Rodar o Projeto REST API (.NET)
